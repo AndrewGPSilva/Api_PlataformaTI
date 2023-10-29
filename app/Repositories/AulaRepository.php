@@ -16,8 +16,8 @@ class AulaRepository
 
     public function getAll()
     {
-        $aula = $this->model->all();
-        return response()->json($aula, 200);
+        $aulas = $this->model->all();
+        return $aulas;
     }
 
     public function create(AulaRequest $request)
