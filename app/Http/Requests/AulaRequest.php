@@ -22,9 +22,9 @@ class AulaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|max:50|min:5',
-            'description' => 'required|min:5|max:500',
-            'link' => 'required|url',
+            'title' => 'required',
+            'description' => 'required',
+            'link' => 'required',
             'image' => 'required',
         ];
     }
