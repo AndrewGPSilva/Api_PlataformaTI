@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Http\Requests\AulaRequest;
 use App\Models\Aula;
+use Exception;
 
 class AulaRepository
 {
@@ -17,7 +18,12 @@ class AulaRepository
     public function getAll()
     {
         $aulas = $this->model->all();
-        return $aulas;
+
+        if($aulas->isEmpty()) {
+            return response()->json(['error' => 'Nenhum conteúdo encontrado'], 404);
+        }
+
+        return response()->json($aulas, 200);
     }
 
     public function create(AulaRequest $request)
@@ -43,8 +49,17 @@ class AulaRepository
 
     public function delete($id)
     {
-        $aula = $this->model->findOrFail($id);
-        $aula->delete();
-        return response()->json(["message" => "Aula excluída com sucesso"]);
+        try {
+            $aula = $this->model->findOrFail($id);
+            $aula->delete();
+            return response()->json(["message" => "Aula excluída com sucesso"]);
+        } catch(Exception $e) {
+            return response()->json([
+                'message' => "Nenhuma aula com esse ID foi encontrada!",
+                'status_code' => 404,
+                $e->getMessage()
+            ], 404);
+
+        }
     }
 }
