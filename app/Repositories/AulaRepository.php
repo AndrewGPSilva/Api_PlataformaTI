@@ -19,7 +19,7 @@ class AulaRepository
     {
         $aulas = $this->model->all();
 
-        if($aulas->isEmpty()) {
+        if ($aulas->isEmpty()) {
             return response()->json(['error' => 'Nenhum conteúdo encontrado'], 404);
         }
 
@@ -28,7 +28,13 @@ class AulaRepository
 
     public function create(AulaRequest $request)
     {
-        $dados = $request->all();
+        $dados = $request->validate(
+            ['title' => 'required|min:5',
+            'description' => 'required|min:5',
+            'link' => 'required|min:5',
+            'image' => 'required|min:5',
+            'category' => 'required|min:5']
+        );
         $aula = $this->model->create($dados);
         return response()->json($aula, 201);
     }
@@ -43,8 +49,16 @@ class AulaRepository
 
     public function getById($id)
     {
-        $aula = $this->model->findOrFail($id);
-        return response()->json($aula, 200);
+        try {
+            $aula = $this->model->findOrFail($id);
+            return response()->json($aula, 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => 'Nenhuma Aula com esse ID foi Encontrada!',
+                'status_code' => 404,
+                $e->getMessage()
+            ], 404);
+        }
     }
 
     public function delete($id)
@@ -53,13 +67,12 @@ class AulaRepository
             $aula = $this->model->findOrFail($id);
             $aula->delete();
             return response()->json(["message" => "Aula excluída com sucesso"]);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             return response()->json([
-                'message' => "Nenhuma aula com esse ID foi encontrada!",
+                'message' => "Nenhuma Aula com esse ID foi Encontrada!",
                 'status_code' => 404,
                 $e->getMessage()
             ], 404);
-
         }
     }
 }

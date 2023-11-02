@@ -26,6 +26,7 @@ class AulaRequest extends FormRequest
             'description' => 'required|min:5',
             'link' => 'required|min:5',
             'image' => 'required|min:5',
+            'category' => 'required|min:5',
         ];
     }
 }
