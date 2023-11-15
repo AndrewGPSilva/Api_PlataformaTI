@@ -22,12 +22,11 @@ class AulaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|min:5',
-            'description' => 'required|min:5',
-            'link' => 'required|min:5',
-            'image' => 'required|min:5',
-            'category' => 'required|min:5',
+            'title' => 'bail|required|min:5|max:100',
+            'description' => 'bail|required|min:5',
+            'link' => 'bail|url|required|min:5',
+            'image' => 'bail|url|required|min:5',
+            'category' => 'bail|required|min:5|max:30'
         ];
     }
 }
-

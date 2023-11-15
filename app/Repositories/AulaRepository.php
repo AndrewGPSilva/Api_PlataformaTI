@@ -28,13 +28,7 @@ class AulaRepository
 
     public function create(AulaRequest $request)
     {
-        $dados = $request->validate(
-            ['title' => 'required|min:5',
-            'description' => 'required|min:5',
-            'link' => 'required|min:5',
-            'image' => 'required|min:5',
-            'category' => 'required|min:5']
-        );
+        $dados = $request->all();
         $aula = $this->model->create($dados);
         return response()->json($aula, 201);
     }
@@ -52,11 +46,10 @@ class AulaRepository
         try {
             $aula = $this->model->findOrFail($id);
             return response()->json($aula, 200);
-        } catch (Exception $e) {
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             return response()->json([
                 'message' => 'Nenhuma Aula com esse ID foi Encontrada!',
                 'status_code' => 404,
-                $e->getMessage()
             ], 404);
         }
     }
