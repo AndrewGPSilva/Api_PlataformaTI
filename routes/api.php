@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\AulaController;
-use App\Http\Controllers\AutenticacaoController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,3 +15,8 @@ Route::get('aulas/create', [AulaController::class, "create"])->name("aula.create
 Route::get('aulas/{id}', [AulaController::class, "show"])->name("aula.show");
 Route::delete('aulas/{id}', [AulaController::class, "destroy"])->name("aula.destroy");
 Route::put('aulas/{id}', [AulaController::class, "update"])->name("aula.update");
+
+Route::post('login', [AuthController::class, "login"])->middleware('api');
+Route::get('user', [AuthController::class, "me"])->middleware('api');
+Route::post('logout', [AuthController::class, "logout"])->middleware('api');
+Route::post('refresh', [AuthController::class, "refresh"])->middleware('api');
