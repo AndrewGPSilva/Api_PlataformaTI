@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AulaRequest;
+use App\Models\Aula;
 use App\Services\AulaService;
+use GuzzleHttp\Psr7\Request;
 
 class AulaController extends Controller
 {
