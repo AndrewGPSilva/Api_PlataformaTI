@@ -18,7 +18,15 @@ class AulaController extends Controller
 
     public function index()
     {
-        return $this->service->getAll();
+        $search = Request('search');
+
+        if ($search) {
+            return Aula::where([
+                ['category', 'like', '%' . $search . '%']
+            ])->get();
+        } else {
+            return $this->service->getAll();
+        }
     }
 
     public function store(AulaRequest $request)
@@ -42,5 +50,12 @@ class AulaController extends Controller
     public function destroy($id)
     {
         return $this->service->delete($id);
+    }
+
+    public function categoryVue()
+    {
+        return Aula::where([
+            ['category', 'like', '%' . 'Python' . '%']
+        ])->get();
     }
 }
