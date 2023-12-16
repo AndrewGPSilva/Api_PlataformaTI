@@ -51,11 +51,4 @@ class AulaController extends Controller
     {
         return $this->service->delete($id);
     }
-
-    public function categoryVue()
-    {
-        return Aula::where([
-            ['category', 'like', '%' . 'Python' . '%']
-        ])->get();
-    }
 }

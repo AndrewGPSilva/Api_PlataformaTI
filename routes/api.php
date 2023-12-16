@@ -20,7 +20,3 @@ Route::post('login', [AuthController::class, "login"]);
 Route::get('user', [AuthController::class, "me"])->middleware('api');
 Route::post('logout', [AuthController::class, "logout"])->middleware('api');
 Route::post('refresh', [AuthController::class, "refresh"])->middleware('api');
-
-// Rotas para Aulas por Categoria
-
-Route::get('/aulas/category/{category}', [AulaController::class, "categoryVue"])->middleware('api');
